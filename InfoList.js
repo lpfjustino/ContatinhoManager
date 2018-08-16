@@ -1,47 +1,56 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Image, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableHighlight, TouchableOpacity } from 'react-native';
+import { Button } from 'react-native-elements';
 import SortableListView from 'react-native-sortable-listview';
+import Icon from 'react-native-ionicons';
 
 let data = {
     hello: { text: 'world' },
     how: { text: 'are you' },
-    test: { text: 123 },
-    this: { text: 'is' },
-    a: { text: 'a' },
-    real: { text: 'real' },
-    drag: { text: 'drag and drop' },
-    bb: { text: 'bb' },
-    cc: { text: 'cc' },
-    dd: { text: 'dd' },
-    ee: { text: 'ee' },
-    ff: { text: 'ff' },
-    gg: { text: 'gg' },
-    hh: { text: 'hh' },
-    ii: { text: 'ii' },
-    jj: { text: 'jj' },
-    kk: { text: 'kk' },
 }
 
 let order = Object.keys(data) //Array of keys
 
-export default class InfoList extends React.Component {
-    _onPress() {
-
+export default class Test extends React.Component {
+    render() {
+        const { navigate } = this.props.navigation;
+        return <View style={{height:'100%'}}>
+            <InfoList navigation={navigate} />
+            <TouchableOpacity
+                style={{
+                    borderWidth: 1,
+                    borderColor: 'rgba(0,0,0,0.2)',
+                    alignItems: 'center',
+                    justifyContent: 'space-around',
+                    width: 50,
+                    height: 50,
+                    backgroundColor: '#fff',
+                    borderRadius: 50,
+                    alignSelf: 'flex-end',
+                    marginBottom: 15,
+                    marginRight: 15,
+                }}
+                >
+                <Icon name={"ios-add"} size={30} color="#01a699" />
+            </TouchableOpacity>
+        </View>
     }
+}
 
+class InfoList extends React.Component {
     render() {
         const { navigate } = this.props.navigation;
         return (
-            <SortableListView
-                style={{ flex: 1 }}
-                data={data}
-                order={order}
-                onRowMoved={e => {
-                    order.splice(e.to, 0, order.splice(e.from, 1)[0])
-                    this.forceUpdate()
-                }}
-                renderRow={row => <RowComponent data={row} />}
-            />
+                <SortableListView
+                    style={{ flex: 1 }}
+                    data={data}
+                    order={order}
+                    onRowMoved={e => {
+                        order.splice(e.to, 0, order.splice(e.from, 1)[0])
+                        this.forceUpdate()
+                    }}
+                    renderRow={row => <RowComponent data={row} />}
+                    />
         );
     }
 }
@@ -66,10 +75,13 @@ class RowComponent extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+    plusButton: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+        height: 40,
+        width: 40,
+        borderRadius: 20,
+        alignContent: 'space-around',
+        borderWidth: 1,
     },
 });
