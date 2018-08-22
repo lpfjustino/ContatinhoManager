@@ -4,6 +4,8 @@ import { Button } from 'react-native-elements';
 import SortableListView from 'react-native-sortable-listview';
 import Icon from 'react-native-ionicons';
 
+import NewInfoPrompt from './components/NewInfoPrompt';
+
 let data = {
     hello: { text: 'world' },
     how: { text: 'are you' },
@@ -12,10 +14,30 @@ let data = {
 let order = Object.keys(data) //Array of keys
 
 export default class Test extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            promptVisible: false,
+            message: '',
+        };
+    }
     render() {
         const { navigate } = this.props.navigation;
+        const { promptVisible, message } = this.state;
+        console.log(promptVisible);
         return <View style={{height:'100%'}}>
             <InfoList navigation={navigate} />
+            <NewInfoPrompt
+                visible={promptVisible}
+                onCancel={() => this.setState({
+                    promptVisible: false,
+                })}
+                onSubmit={(value) => this.setState({
+                    promptVisible: false,
+                    message: "ata",
+                })}
+                message={message}
+                />
             <TouchableOpacity
                 style={{
                     borderWidth: 1,
@@ -30,6 +52,7 @@ export default class Test extends React.Component {
                     marginBottom: 15,
                     marginRight: 15,
                 }}
+                onPress={() => this.setState({ promptVisible: true })}
                 >
                 <Icon name={"ios-add"} size={30} color="#01a699" />
             </TouchableOpacity>
