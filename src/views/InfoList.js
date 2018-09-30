@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Image, TouchableHighlight, TouchableOpacity } from 'react-native';
+import { Text, View, Image, TouchableHighlight, TouchableOpacity, AsyncStorage } from 'react-native';
 import { Button } from 'react-native-elements';
 import SortableListView from 'react-native-sortable-listview';
 import Icon from 'react-native-ionicons';
@@ -7,26 +7,22 @@ import styles from './styles';
 
 import NewInfoPrompt from '../components/NewInfoPrompt';
 
-let data = {
-    hello: { text: 'world' },
-    how: { text: 'are you' },
-}
-
-let order = Object.keys(data) //Array of keys
-
-export default class Test extends React.Component {
+export default class InfoList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             promptVisible: false,
             message: '',
+            list: [ "hello", "how" ],
         };
     }
     render() {
         const { navigate } = this.props.navigation;
-        const { promptVisible, message } = this.state;
+        const { promptVisible, message, list } = this.state;
         return <View style={{height:'100%'}}>
-            <InfoList navigation={navigate} />
+            <InformationsList
+                navigation={navigate} 
+                list={list}/>
             <NewInfoPrompt
                 visible={promptVisible}
                 onCancel={() => this.setState({
@@ -48,14 +44,17 @@ export default class Test extends React.Component {
     }
 }
 
-class InfoList extends React.Component {
+function persistList(newValue) {
+
+}
+
+class InformationsList extends React.Component {
     render() {
         const { navigate } = this.props.navigation;
         return (
                 <SortableListView
                     style={{ flex: 1 }}
-                    data={data}
-                    order={order}
+                    data={this.props.list}
                     onRowMoved={e => {
                         order.splice(e.to, 0, order.splice(e.from, 1)[0])
                         this.forceUpdate()
@@ -71,15 +70,10 @@ class RowComponent extends React.Component {
         return (
             <TouchableHighlight
                 underlayColor={'#eee'}
-                style={{
-                    padding: 25,
-                    backgroundColor: '#F8F8F8',
-                    borderBottomWidth: 1,
-                    borderColor: '#eee',
-                }}
+                style={styles.listRow}
                 {...this.props.sortHandlers}
             >
-                <Text>{this.props.data.text}</Text>
+                <Text>{this.props.data}</Text>
             </TouchableHighlight>
         )
     }

@@ -15,6 +15,12 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         marginRight: 15,
     },
+    listRow: {
+        padding: 25,
+        backgroundColor: '#F8F8F8',
+        borderBottomWidth: 1,
+        borderColor: '#eee',
+    },
 });
 
 export default styles;
