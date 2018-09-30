@@ -3,13 +3,14 @@ import Prompt from 'react-native-prompt';
 
 export default class NewInfoPrompt extends React.Component {
     render() {
+        const { visible, onCancel, onSubmit } = this.props;
         return <Prompt
             title="Say something"
             placeholder="Start typing"
             defaultValue="Hello"
-            visible={ this.props.visible }
-            onCancel={ this.props.onCancel }
-            onSubmit={ this.props.onSubmit }
+            visible={ visible }
+            onCancel={ onCancel }
+            onSubmit={ onSubmit }
             />
     }
 }

@@ -24,7 +24,6 @@ export default class Test extends React.Component {
     render() {
         const { navigate } = this.props.navigation;
         const { promptVisible, message } = this.state;
-        console.log(promptVisible);
         return <View style={{height:'100%'}}>
             <InfoList navigation={navigate} />
             <NewInfoPrompt
@@ -41,13 +40,13 @@ export default class Test extends React.Component {
             <TouchableOpacity
                 style={{
                     borderWidth: 1,
-                    borderColor: 'rgba(0,0,0,0.2)',
+                    borderColor: 'rgba(0,0,0,0.1)',
                     alignItems: 'center',
                     justifyContent: 'space-around',
-                    width: 50,
-                    height: 50,
+                    width: 40,
+                    height: 40,
                     backgroundColor: '#fff',
-                    borderRadius: 50,
+                    borderRadius: 40,
                     alignSelf: 'flex-end',
                     marginBottom: 15,
                     marginRight: 15,
@@ -96,15 +95,3 @@ class RowComponent extends React.Component {
         )
     }
 }
-
-const styles = StyleSheet.create({
-    plusButton: {
-        display: 'flex',
-        justifyContent: 'flex-end',
-        height: 40,
-        width: 40,
-        borderRadius: 20,
-        alignContent: 'space-around',
-        borderWidth: 1,
-    },
-});
