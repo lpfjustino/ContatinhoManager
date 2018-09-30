@@ -52,16 +52,18 @@ export default class InfoList extends React.Component {
         try {
             const infoList = await AsyncStorage.getItem('infoList');
             if (infoList !== null) {
-                this.setState(infoList);
+                const parsedInfoList = JSON.parse(infoList);
+                this.setState({ list: parsedInfoList });
             }
         } catch (error) {
             // Error retrieving data
         }
     }
 
-    _persistDate = async (value) => {
+    _persistData = async (value) => {
         try {
-            await AsyncStorage.setItem('infoList', newList);
+            const persistedValue = JSON.stringify(value);
+            await AsyncStorage.setItem('infoList', persistedValue);
         } catch (error) {
             // Error saving data
         }
