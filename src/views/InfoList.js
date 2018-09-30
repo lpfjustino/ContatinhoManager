@@ -15,7 +15,10 @@ export default class InfoList extends React.Component {
             message: '',
             list: [ "hello", "how" ],
         };
+
+        this._retrieveData();
     }
+
     render() {
         const { navigate } = this.props.navigation;
         const { promptVisible, message, list } = this.state;
@@ -25,13 +28,15 @@ export default class InfoList extends React.Component {
                 list={list}/>
             <NewInfoPrompt
                 visible={promptVisible}
-                onCancel={() => this.setState({
-                    promptVisible: false,
-                })}
-                onSubmit={(value) => this.setState({
-                    promptVisible: false,
-                    message: "ata",
-                })}
+                onCancel={() => this.setState({ promptVisible: false })}
+                onSubmit={(value) => {
+                    const appendedList = [...this.state.list, value];
+                    this.setState({
+                        promptVisible: false,
+                        list: appendedList,
+                    });
+                    this._persistData(appendedList);
+                }}
                 message={message}
                 />
             <TouchableOpacity
@@ -42,10 +47,25 @@ export default class InfoList extends React.Component {
             </TouchableOpacity>
         </View>
     }
-}
 
-function persistList(newValue) {
+    _retrieveData = async () => {
+        try {
+            const infoList = await AsyncStorage.getItem('infoList');
+            if (infoList !== null) {
+                this.setState(infoList);
+            }
+        } catch (error) {
+            // Error retrieving data
+        }
+    }
 
+    _persistDate = async (value) => {
+        try {
+            await AsyncStorage.setItem('infoList', newList);
+        } catch (error) {
+            // Error saving data
+        }
+    }
 }
 
 class InformationsList extends React.Component {
