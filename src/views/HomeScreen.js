@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, Image } from 'react-native';
-import { general } from './styles';
+import { general } from '../styles';
 
 export default class HomeScreen extends React.Component {
     _onPress() {
